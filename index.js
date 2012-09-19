@@ -35,56 +35,56 @@ var socket_io = io.listen(server, {log: false})
 
 socket_io.on('connection', function (socket) {
 
-    var package_info = (function () {
+  var package_info = (function () {
 
-      var options = {
-	host: 'isaacs.iriscouch.com'
-      , path: '/registry/' + package_name + '?rev=' + package_rev
-      , port: 80
-      , method: 'GET'
-      }
+    var options = {
+      host: 'isaacs.iriscouch.com'
+    , path: '/registry/' + package_name + '?rev=' + package_rev
+    , port: 80
+    , method: 'GET'
+    }
 
-      var req = http.request(options, function (res) {
-	var chunks = []
-	var buffer_len = 0
-	res.on('data', function (chunk) {
-	  chunks.push(chunk)
-	  buffer_len += chunk.length
-	})
-
-	res.on('end', function () {
-	  var concat_buff = new Buffer(buffer_len)
-	  var index = 0
-	  chunks.forEach(function (val) {
-	    val.copy(concat_buff, index, 0, val.length)
-	    index += val.length
-	  })
-
-	  var body = concat_buff.toString('utf8')
-	  var body = JSON.parse(body)
-	  var package_meta = {
-	    name: package_name
-	  , author: '?'
-	  }
-	  if (body.author && body.author.name) {
-	    package_meta.author = body.author.name
-	  }
-	  else if (body.maintainers) {
-	    var maintainers = []
-	    body.maintainers.forEach(function (val) {
-	      maintainers.push(val.name)
-	    })
-	    package_meta.author = maintainers.join(' & ')
-	  }
-
-
-          socket.emit('module_update', package_meta)
-	  console.log(package_meta)
-	})
-	
+    var req = http.request(options, function (res) {
+      var chunks = []
+      var buffer_len = 0
+      res.on('data', function (chunk) {
+	chunks.push(chunk)
+	buffer_len += chunk.length
       })
 
-      req.end()
+      res.on('end', function () {
+	var concat_buff = new Buffer(buffer_len)
+	var index = 0
+	chunks.forEach(function (val) {
+	  val.copy(concat_buff, index, 0, val.length)
+	  index += val.length
+	})
+
+	var body = concat_buff.toString('utf8')
+	var body = JSON.parse(body)
+	var package_meta = {
+	  name: package_name
+	, author: '?'
+	}
+	if (body.author && body.author.name) {
+	  package_meta.author = body.author.name
+	}
+	else if (body.maintainers) {
+	  var maintainers = []
+	  body.maintainers.forEach(function (val) {
+	    maintainers.push(val.name)
+	  })
+	  package_meta.author = maintainers.join(' & ')
+	}
+
+
+	socket.emit('module_update', package_meta)
+	console.log(package_meta)
+      })
+      
+    })
+
+    req.end()
 
     })()
 
