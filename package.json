@@ -1,0 +1,23 @@
+{
+  "name": "npm-updates",
+  "version": "0.0.2-1",
+  "description": "watch which npm packages are updated in real time",
+  "dependencies": {
+    "couchstream": "~0.0.1",
+    "socket.io": "~0.9.10",
+    "st": "~0.0.6"
+  },
+  "scripts": {
+    "start": "index.js"
+  },
+  "repository": {},
+  "author": {
+    "name": "Luke Arduini",
+    "email": "luke.arduini@me.com"
+  },
+  "license": "MIT",
+  "subdomain": "npm-updates",
+  "engines": {
+    "node": "v0.8.x"
+  }
+}

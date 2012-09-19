@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant Food Loophole</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,300,800,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+
+  <body>
+
+    <div id="container">
+      <h1>The most recently updated module</h1> 
+	  <h1 class="losercase">on</h1> 
+	  <h1 class="npm">NPM</h1>
+      &#8212; <span class="is">is</span> &#8212;
+      <div class="results">
+		  <h2 class="module">?</h2>
+	  </div>
+	  <h2 class="by">by</h2>
+      <div class="results">
+		  <h2 class="author"><span>?</span></h2>
+	  </div>
+
+      <div id="content">
+
+        <p>
+          <h3>This strange phenomenon, not make sense of your choice. How do we how many of the modules until now has not been or will need you need to update a number of modules currently? If I had, the module is unknown you only if you want to order the return of the present study. Do not have what a module, please you the NPM.</h3>
+        </p>
+
+        </div>
+
+
+
+     </div>
+
+	 <script type="text/javascript">
+	   var socket = io.connect('/')
+	   socket.on('module_update', function (data) {
+		   console.log(data)
+	 	  $('.module, .author span').fadeTo(300, 0, function () {
+			  $('.module').html(data.name).fadeTo(200, 1)
+			  $('.author span').html(data.author).fadeTo(200, 1)
+	 	  })
+	   })
+	 </script>
+  </body>
+
+</html>
