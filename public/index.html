@@ -39,7 +39,6 @@
 	 <script type="text/javascript">
 	   var socket = io.connect('/')
 	   socket.on('module_update', function (data) {
-		   console.log(data)
 	 	  $('.module, .author span').fadeTo(300, 0, function () {
 			  $('.module').html(data.name).fadeTo(200, 1)
 			  $('.author span').html(data.author).fadeTo(200, 1)
