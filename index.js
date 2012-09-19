@@ -20,6 +20,7 @@ var registry = new CouchStream({
 , database: 'registry'
 , query: {
     since: 227793 
+  , heartbeat: 5000
   }
 })
 
@@ -29,6 +30,7 @@ var package_name = '?'
 registry.on('change', function (change) {
   package_name = change.id
   package_rev = change.changes[0].rev
+  console.log(package_name)
 })
 
 var socket_io = io.listen(server, {log: false}) 
